@@ -1,0 +1,76 @@
+-- 俱乐部
+CREATE TABLE Clubs (
+    club_id      INT AUTO_INCREMENT PRIMARY KEY,
+    name         VARCHAR(100) NOT NULL,
+    address      VARCHAR(200),
+    details      TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 棋手
+CREATE TABLE Players (
+    player_id    INT AUTO_INCREMENT PRIMARY KEY,
+    name         VARCHAR(100) NOT NULL,
+    address      VARCHAR(200),
+    details      TEXT,
+    ranking      INT UNIQUE   -- 每个棋手唯一排名
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 会员关系（棋手属于某俱乐部）
+CREATE TABLE Members (
+    member_id    INT AUTO_INCREMENT PRIMARY KEY,
+    club_id      INT NOT NULL,
+    player_id    INT NOT NULL UNIQUE,  -- 一个棋手只能属于一个俱乐部
+    join_date    DATE,
+    FOREIGN KEY (club_id) REFERENCES Clubs(club_id),
+    FOREIGN KEY (player_id) REFERENCES Players(player_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 赞助方
+CREATE TABLE Sponsors (
+    sponsor_id   INT AUTO_INCREMENT PRIMARY KEY,
+    name         VARCHAR(100) NOT NULL,
+    type         VARCHAR(50),   -- 企业 / 政府 等
+    details      TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 锦标赛
+CREATE TABLE Tournaments (
+    tournament_id  INT AUTO_INCREMENT PRIMARY KEY,
+    code           VARCHAR(50) UNIQUE NOT NULL,  -- 独特代码
+    name           VARCHAR(100) NOT NULL,
+    club_id        INT,   -- 举办俱乐部
+    start_date     DATE,
+    end_date       DATE,
+    FOREIGN KEY (club_id) REFERENCES Clubs(club_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 锦标赛与赞助方的多对多关系
+CREATE TABLE Tournament_Sponsors (
+    tournament_id  INT NOT NULL,
+    sponsor_id     INT NOT NULL,
+    PRIMARY KEY (tournament_id, sponsor_id),
+    FOREIGN KEY (tournament_id) REFERENCES Tournaments(tournament_id),
+    FOREIGN KEY (sponsor_id) REFERENCES Sponsors(sponsor_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 锦标赛参赛棋手
+CREATE TABLE Tournament_Participants (
+    tournament_id  INT NOT NULL,
+    player_id      INT NOT NULL,
+    PRIMARY KEY (tournament_id, player_id),
+    FOREIGN KEY (tournament_id) REFERENCES Tournaments(tournament_id),
+    FOREIGN KEY (player_id) REFERENCES Players(player_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 比赛
+CREATE TABLE Matches (
+    match_id       INT AUTO_INCREMENT PRIMARY KEY,
+    tournament_id  INT NOT NULL,
+    player1_id     INT NOT NULL,
+    player2_id     INT NOT NULL,
+    result         VARCHAR(50),   -- 例如 "1-0"、"0-1"、"0.5-0.5"
+    match_date     DATE,
+    FOREIGN KEY (tournament_id) REFERENCES Tournaments(tournament_id),
+    FOREIGN KEY (player1_id) REFERENCES Players(player_id),
+    FOREIGN KEY (player2_id) REFERENCES Players(player_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

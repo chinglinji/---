@@ -1,0 +1,8 @@
+47.29.201.179 - - [28/Feb/2019:13:17:10 +0000] "GET /?p=1 HTTP/2.0" 200 5316 "https://domain1.com/?p=1" "Mozilla/5.0 (Windows NT 6.1)" "2.75"
+192.168.1.5 - - [28/Feb/2019:14:00:00 +0000] "POST /submit HTTP/1.1" 201 123 "-" "curl/7.58.0"
+10.0.0.1 - - [28/Feb/2019:15:30:00 +0000] "GET /img.png HTTP/1.1" 404 0 "http://example.com/page" "Mozilla/5.0"
+8.8.8.8 - - [28/Feb/2019:23:59:59 +0000] "GET /home HTTP/1.1" 302 204 "https://sub.domain1.com/redirect" "UA/1.0"
+123.45.67.89 - - [01/Mar/2019:00:00:01 +0000] "GET /next HTTP/1.1" 200 100 "-" "UA/2.0"
+47.29.201.180 - - [28/Feb/2019:16:00:00 +0000] "GET /api HTTP/1.1" 500 20 "https://domain1.com/login" "Agent/3.0"
+203.0.113.5 - - [28/Feb/2019:10:00:00 +0000] "GET /file HTTP/1.1" 204 10 "https://another.com" "Agent/4.0"
+203.0.113.6 - - [28/Feb/2019:11:11:11 +0000] "GET /ok HTTP/1.1" 200 50 "-" "Agent/5.0"

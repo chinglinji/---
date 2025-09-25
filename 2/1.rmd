@@ -1,0 +1,8 @@
+SELECT COUNT(*) AS num_users
+FROM (
+    SELECT user_id, COUNT(*) AS cnt
+    FROM event_log
+    WHERE event_timestamp BETWEEN 1598918400 AND 1601510399
+    GROUP BY user_id
+    HAVING COUNT(*) >= 1000 AND COUNT(*) < 2000
+) ;
